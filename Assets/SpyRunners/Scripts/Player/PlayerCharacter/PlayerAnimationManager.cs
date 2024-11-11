@@ -1,29 +1,14 @@
-﻿using SpyRunners.Managers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SpyRunners.Player
 {
-    public class PlayerLook : MonoBehaviour, IDependent
+    public class PlayerAnimationManager : MonoBehaviour, IDependent
     {
-        [SerializeField] private CameraData _cameraData;
-        [SerializeField] private int _cameraPriority;
-        [Space] 
-        [SerializeField] private Transform _yawTransform;
-        [SerializeField] private Transform _pitchTransform;
-        [SerializeField] private float _minPitch;
-        [SerializeField] private float _maxPitch;
-        [Space]
-        [SerializeField] private float _yawSensitivity = 0.2f;
-        [SerializeField] private float _pitchSensitivity = 0.2f;
-        
         private PlayerCharacter _playerCharacter;
+        private Animator _animator;
         private PlayerInputManager _playerInputManager;
-
-        private int _cameraId;
-
-        private float _cameraPitch;
-        private float _cameraYaw;
-
+        private PlayerMovement _playerMovement;
+        
         private bool _isInitialized = false;
         private bool _isSubscribed = false;
         private bool _isCleanedUp = false;
@@ -33,6 +18,7 @@ namespace SpyRunners.Player
         {
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
+            _animator = GetComponent<Animator>();
         }
         
         public void Initialize()
@@ -40,8 +26,7 @@ namespace SpyRunners.Player
             if (_isInitialized)
                 return;
             
-            _cameraId = IdManager.GetId();
-            CameraManager.Cameras.Add(_cameraId, _cameraPriority, _cameraData);
+            
 
             _isInitialized = true;
         }
@@ -54,19 +39,24 @@ namespace SpyRunners.Player
             _playerInputManager = _playerCharacter.PlayerManager.Dependencies[typeof(PlayerInputManager)] as PlayerInputManager;
             if (!_playerInputManager)
                 throw new System.NullReferenceException("PlayerInputManager is null");
+            _playerInputManager.JumpButton.Pressed += OnJump;
+            _playerMovement = _playerCharacter.Dependencies[typeof(PlayerMovement)] as PlayerMovement;
+            if (!_playerMovement)
+                throw new System.NullReferenceException("PlayerMovement is null");
 
             _isSubscribed = true;
         }
-
+        
         private void Update()
         {
-            _cameraYaw += _playerInputManager.LookInput.x * _yawSensitivity;
-            
-            _cameraPitch -= _playerInputManager.LookInput.y * _pitchSensitivity;
-            _cameraPitch = Mathf.Clamp(_cameraPitch, _minPitch, _maxPitch);
-            
-            _yawTransform.localEulerAngles = new Vector3(0, _cameraYaw, 0);
-            _pitchTransform.localEulerAngles = new Vector3(_cameraPitch, 0, 0);
+            //_animator.SetBool("Slide", _playerInputManager.SlideButton.Held);
+            //_animator.SetFloat("InputX", _playerInputManager.MoveInput.x);
+            //_animator.SetFloat("InputY", _playerInputManager.MoveInput.y);
+        }
+
+        private void OnJump()
+        {
+            //_animator.SetTrigger("Jump");
         }
 
         public void CleanUp()
@@ -74,8 +64,7 @@ namespace SpyRunners.Player
             if (_isCleanedUp)
                 return;
             
-            if (CameraManager.Cameras != null)
-                CameraManager.Cameras.Remove(_cameraId);
+            
 
             _isCleanedUp = true;
         }
@@ -86,13 +75,17 @@ namespace SpyRunners.Player
                 return;
 
             _playerInputManager = null;
+            _playerMovement = null;
 
             _isSubscribed = true;
         }
 
         public void Finish()
         {
+            if (_isFinished)
+                return;
             
+            _isFinished = true;
         }
     }
 }

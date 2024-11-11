@@ -10,6 +10,7 @@ namespace SpyRunners.Player
         public PlayerManager PlayerManager;
         
         private Dictionary<Type, IDependent> _dependencies = new ();
+        public IReadOnlyDictionary<Type, IDependent> Dependencies => _dependencies;
 
         private bool _isInitialized = false;
         private bool _isSubscribed = false;
@@ -31,10 +32,7 @@ namespace SpyRunners.Player
             if (_isInitialized)
                 return;
             
-            foreach (var dependent in _dependencies.Values) 
-                dependent.Initialize();
-            foreach (var dependent in _dependencies.Values) 
-                dependent.SubscribeToEvents();
+            IDependencyUtils.CallDependentStartMethods(_dependencies);
 
             _isInitialized = true;
         }
@@ -54,12 +52,7 @@ namespace SpyRunners.Player
             if (_isCleanedUp)
                 return;
             
-            foreach (var dependent in _dependencies.Values) 
-                dependent.CleanUp();
-            foreach (var dependent in _dependencies.Values) 
-                dependent.UnsubscribeFromEvents();
-            foreach (var dependent in _dependencies.Values) 
-                dependent.Finish();
+            IDependencyUtils.CallDependentFinalMethods(_dependencies);
             _dependencies.Clear();
 
             _isCleanedUp = true;

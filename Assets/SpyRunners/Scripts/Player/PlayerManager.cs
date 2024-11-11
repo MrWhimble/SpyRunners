@@ -13,31 +13,17 @@ namespace SpyRunners.Player
 
         public void AddDependent(IDependent dependent)
         {
-            if (_dependencies.ContainsKey(dependent.GetType()))
-                return;
-            
-            _dependencies.Add(dependent.GetType(), dependent);
-            dependent.Initialize();
-            dependent.SubscribeToEvents();
+            IDependencyUtils.AddDependencyAndCallMethods(dependent, _dependencies);
         }
 
         public void RemoveDependent(IDependent dependent)
         {
-            if (!_dependencies.ContainsKey(dependent.GetType()))
-                return;
-            
-            dependent.CleanUp();
-            dependent.UnsubscribeFromEvents();
-            dependent.Finish();
-            _dependencies.Remove(dependent.GetType());
+            IDependencyUtils.RemoveDependencyAndCallMethods(dependent, _dependencies);
         }
 
         private void Start()
         {
-            foreach (var dependent in _dependencies.Values) 
-                dependent.Initialize();
-            foreach (var dependent in _dependencies.Values) 
-                dependent.SubscribeToEvents();
+            IDependencyUtils.CallDependentStartMethods(_dependencies);
 
             SpawnPlayerCharacter();
         }
@@ -51,12 +37,7 @@ namespace SpyRunners.Player
 
         private void OnDestroy()
         {
-            foreach (var dependent in _dependencies.Values) 
-                dependent.CleanUp();
-            foreach (var dependent in _dependencies.Values) 
-                dependent.UnsubscribeFromEvents();
-            foreach (var dependent in _dependencies.Values) 
-                dependent.Finish();
+            IDependencyUtils.CallDependentFinalMethods(_dependencies);
             _dependencies.Clear();
         }
     }
