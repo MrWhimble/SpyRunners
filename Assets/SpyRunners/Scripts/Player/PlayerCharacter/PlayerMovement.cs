@@ -1,6 +1,5 @@
 ﻿using System;
-using UnityEngine;
-
+using UnityEngine; 
 namespace SpyRunners.Player
 {
     public class PlayerMovement : MonoBehaviour, IDependent
@@ -51,7 +50,7 @@ namespace SpyRunners.Player
             _hitCache = new RaycastHit[4];
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
-            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>(); 
         }
         
         public void Initialize()
@@ -74,6 +73,12 @@ namespace SpyRunners.Player
             
 
             _subscribed = true;
+        }
+
+        public void AdjustSpeed(float amount )
+        {
+            _maxSpeed += amount;   
+            
         }
 
         private void FixedUpdate()
