@@ -12,11 +12,13 @@ namespace SpyRunners.Player {
         {
             target.GetComponent<PlayerPowerupManager>().AddPowerup(this);
             target.GetComponent<PlayerMovement>().AdjustSpeed(amount);
+            target.GetComponent<PlayerEffectManager>().SpawnEffect(effect);
         }
 
         public override void Remove(GameObject target)
         {
-            target.GetComponent<PlayerMovement>().AdjustSpeed(-amount); 
+            target.GetComponent<PlayerMovement>().AdjustSpeed(-amount);
+            target.GetComponent<PlayerEffectManager>().RemoveEffect();
         }
     }
 }

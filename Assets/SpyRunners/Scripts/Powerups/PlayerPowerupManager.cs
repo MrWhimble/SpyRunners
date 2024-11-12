@@ -5,7 +5,7 @@ namespace SpyRunners.Player
 {
     public class PlayerPowerupManager : MonoBehaviour
     {
-        public PowerupEffect currentPowerup;
+        public PowerupEffect currentPowerup; 
         bool powerUpActive = false;
 
         public void AddPowerup(PowerupEffect newpowerUp)
@@ -13,7 +13,7 @@ namespace SpyRunners.Player
             currentPowerup = newpowerUp;
             powerUpActive = true;
             StartCoroutine(Duration(currentPowerup.duration));
-        }
+        } 
 
         public IEnumerator Duration(float duration)
         { 

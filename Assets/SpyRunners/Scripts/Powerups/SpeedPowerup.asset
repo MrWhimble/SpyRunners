@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SpeedPowerup
   m_EditorClassIdentifier: 
   duration: 5
-  amount: 5
+  amount: 15
+  effect: {fileID: 7968514742294015579, guid: d33d06ca0f500f040a56e46e49084b06, type: 3}

@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - TopLayer
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: OnTop
+    uniqueID: 1197454219
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
