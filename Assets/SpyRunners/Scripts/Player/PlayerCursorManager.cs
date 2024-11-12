@@ -49,7 +49,8 @@ namespace SpyRunners.Player
             if (_isCleanedUp)
                 return;
             
-            CursorManager.Cursors.Remove(_cursorId);
+            if (CursorManager.Cursors != null)
+                CursorManager.Cursors.Remove(_cursorId);
 
             _isCleanedUp = true;
         }

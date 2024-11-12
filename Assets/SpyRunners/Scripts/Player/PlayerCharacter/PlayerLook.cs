@@ -82,12 +82,12 @@ namespace SpyRunners.Player
 
         public void UnsubscribeFromEvents()
         {
-            if (_isSubscribed)
+            if (!_isSubscribed)
                 return;
 
             _playerInputManager = null;
 
-            _isSubscribed = true;
+            _isSubscribed = false;
         }
 
         public void Finish()

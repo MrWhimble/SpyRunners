@@ -55,6 +55,8 @@ namespace SpyRunners.Managers
 
         private void SetCameraValues(CameraData data)
         {
+            if (!data.Target)
+                return;
             _camera.transform.position = data.Target.position;
             _camera.transform.rotation = data.Target.rotation;
             _camera.fieldOfView = data.FieldOfView;

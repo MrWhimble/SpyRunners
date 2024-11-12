@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2293136477322500403}
   - component: {fileID: 5619965017497489705}
   - component: {fileID: 6885820872115357338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 148962006077749877}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 323585193254299824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,14 +158,19 @@ GameObject:
   m_Component:
   - component: {fileID: 214274837179042617}
   - component: {fileID: 6652708959219828936}
+  - component: {fileID: 5674684011371902942}
   - component: {fileID: 5504628507244167552}
   - component: {fileID: -7495075262693985486}
+  - component: {fileID: -4412138570128964500}
   - component: {fileID: 1079646774510039783}
   - component: {fileID: 2256828237200816200}
+  - component: {fileID: 5480856827216004522}
+  - component: {fileID: 3974767067925707237}
   - component: {fileID: 7299923183667285}
   - component: {fileID: 5844650598222231040}
   - component: {fileID: -5869688913454540302}
-  m_Layer: 0
+  - component: {fileID: 1281868197156137551}
+  m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,6 +206,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerManager: {fileID: 0}
+--- !u!114 &5674684011371902942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412654258829627495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59324b0422c14381bb4e704521b5a39f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5504628507244167552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 4
-  _acceleration: 50
+  _acceleration: 200
   _accelerationFactorFromDot:
     serializedVersion: 2
     m_Curve:
@@ -250,7 +267,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _accelerationFactorOnGround: 1
   _accelerationFactorInAir: 0.25
-  _maxAccelerationForce: 50
+  _maxAccelerationForce: 200
   _maxAccelerationForceFactorOnGround: 1
   _maxAccelerationForceFactorInAir: 0.1
   _maxAccelerationForceFactorFromDot:
@@ -321,10 +338,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   _groundCheckLayers:
     serializedVersion: 2
-    m_Bits: 1
-  _groundCheckStartHeight: 0.3
-  _groundCheckDistance: 0.12
-  _groundCheckRadius: 0.2
+    m_Bits: 65
+  _groundCheckStartHeight: 0.6
+  _groundCheckDistance: 0.26
+  _groundCheckRadius: 0.4
   _jumpForce: 4
   _forceScale: {x: 1, y: 0, z: 1}
 --- !u!114 &-7495075262693985486
@@ -352,6 +369,28 @@ MonoBehaviour:
   _maxPitch: 80
   _yawSensitivity: 0.2
   _pitchSensitivity: 0.2
+--- !u!114 &-4412138570128964500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412654258829627495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c441348b604a55bc34a843c398cbb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grappleVisualPrefab: {fileID: 2188937578273059951, guid: 1435087fea5f51d488fe20a5ce04c153,
+    type: 3}
+  _grappleOrigin: {fileID: 148962006077749877}
+  _maxDistanceFromGrapplePoint: 1
+  _maxDistanceFromOrigin: 20
+  _minDistanceFromOrigin: 3
+  _grappleThrowSpeed: 50
+  _pullingSpeed: 40
+  _grappleStrength: 1200
+  _grappleDampening: 400
 --- !u!114 &1079646774510039783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +419,31 @@ MonoBehaviour:
     LockState: 1
     IsVisible: 0
   _cursorPriority: 100
+--- !u!114 &5480856827216004522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412654258829627495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e298cb15b97c048b27be028384f4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 1
+--- !u!114 &3974767067925707237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412654258829627495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a43142efa74e59b620ff54ea05e1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &7299923183667285
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -388,7 +452,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7412654258829627495}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 80
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -405,8 +469,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!136 &5844650598222231040
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -451,6 +515,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1281868197156137551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412654258829627495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f2c97a93c50d44c8fad62e097376f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestCheckpoint: {fileID: 0}
 --- !u!1 &7436465654346912813
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +539,7 @@ GameObject:
   - component: {fileID: 1115967503636040067}
   - component: {fileID: 5855363130267109191}
   - component: {fileID: 1792352898101539583}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -33,10 +33,11 @@ namespace SpyRunners.Player
         
         private PlayerCharacter _playerCharacter;
         private Rigidbody _rigidbody;
+        private PlayerMovementStateManager _playerMovementStateManager;
         private PlayerInputManager _playerInputManager;
         
         private RaycastHit[] _hitCache;
-        private Collider[] _colliderCache;
+        private Collider[] _colliderCache = new Collider[4];
         private Rigidbody _groundedRigidbody;
 
         private Vector3 _goalVelocity;
@@ -47,6 +48,7 @@ namespace SpyRunners.Player
         
         private void Awake()
         {
+            _hitCache = new RaycastHit[4];
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
             _rigidbody = GetComponent<Rigidbody>();
@@ -62,16 +64,23 @@ namespace SpyRunners.Player
             if (_subscribed)
                 return;
             
+            _playerMovementStateManager = _playerCharacter.Dependencies[typeof(PlayerMovementStateManager)] as PlayerMovementStateManager;
+            if (!_playerMovementStateManager)
+                throw new System.NullReferenceException("PlayerMovementStateManager is null");
             _playerInputManager = _playerCharacter.PlayerManager.Dependencies[typeof(PlayerInputManager)] as PlayerInputManager;
             if (!_playerInputManager)
                 throw new System.NullReferenceException("PlayerInputManager is null");
             _playerInputManager.JumpButton.Pressed += OnJumpPressed;
+            
 
             _subscribed = true;
         }
 
         private void FixedUpdate()
         {
+            if (_playerMovementStateManager.CurrentState is PlayerMovementStates.Grappling)
+                return;
+            
             float deltaTime = Time.fixedDeltaTime;
 
             bool grounded = GetGroundHit(out RaycastHit groundHit);
@@ -199,6 +208,7 @@ namespace SpyRunners.Player
             
             _playerInputManager.JumpButton.Pressed -= OnJumpPressed;
             _playerInputManager = null;
+            _playerMovementStateManager = null;
             
             _subscribed = false;
         }
@@ -207,5 +217,22 @@ namespace SpyRunners.Player
         {
             
         }
+        
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            //DebugUtils.DrawWireCapsule(transform.position + transform.up * (_standingColliderHeight - (_standingColliderHeight - _crouchColliderHeight) / 2f), transform.rotation, _ceilingCheckRadius, _standingColliderHeight - _crouchColliderHeight - 0.2f, Color.green);
+            
+            DebugUtils.DrawWireCapsule(
+                transform.position + transform.up * (_groundCheckStartHeight - _groundCheckDistance * 0.5f),
+                transform.rotation, _groundCheckRadius, _groundCheckDistance);
+            
+            //float bottom = _climbCheckRadius + 0.1f;
+            //float range = _standingColliderHeight - _climbCheckRadius * 2f - 0.2f;
+            //Quaternion rot = Quaternion.LookRotation(-transform.up, transform.forward);
+            //for (int i = 0; i < 3; i++)
+            //    DebugUtils.DrawWireCapsule(transform.position + transform.up * (bottom + range * (i / 2f)) + transform.forward * _climbCheckDistance / 2f, rot, _climbCheckRadius, _climbCheckDistance, Color.cyan);
+        }
+#endif // UNITY_EDITOR
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace SpyRunners
@@ -54,10 +55,12 @@ namespace SpyRunners
         
         private void OnPressed(InputAction.CallbackContext context)
         {
+            Debug.Log($"Pressed: {_inputName}");
             Pressed?.Invoke();
+            Held = true;
         }
 
-        private void OnHeld(InputAction.CallbackContext context) => Held = context.ReadValueAsButton();
+        private void OnHeld(InputAction.CallbackContext context) => Held = true;
 
         private void OnReleased(InputAction.CallbackContext context)
         {

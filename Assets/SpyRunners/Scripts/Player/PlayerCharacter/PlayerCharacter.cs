@@ -31,6 +31,11 @@ namespace SpyRunners.Player
         {
             if (_isInitialized)
                 return;
+
+            foreach (var kv in _dependencies)
+            {
+                Debug.Log(kv.Key.ToString());
+            }
             
             IDependencyUtils.CallDependentStartMethods(_dependencies);
 
@@ -73,7 +78,8 @@ namespace SpyRunners.Player
             if (_isFinished)
                 return;
             
-            Destroy(gameObject);
+            if (gameObject)
+                Destroy(gameObject);
 
             _isFinished = true;
         }

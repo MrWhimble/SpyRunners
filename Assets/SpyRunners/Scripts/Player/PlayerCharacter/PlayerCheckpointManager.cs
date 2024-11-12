@@ -1,24 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace SpyRunners.Player
 {
-    public class PlayerAnimationManager : MonoBehaviour, IDependent
+    public class PlayerCheckpointManager : MonoBehaviour, IDependent
     {
         private PlayerCharacter _playerCharacter;
-        private Animator _animator;
-        private PlayerInputManager _playerInputManager;
-        private PlayerMovement _playerMovement;
+        private PlayerHealth _playerHealth;
+
+        private Transform _latestCheckpoint;
         
         private bool _isInitialized = false;
         private bool _isSubscribed = false;
         private bool _isCleanedUp = false;
         private bool _isFinished = false;
-        
+
         private void Awake()
         {
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
-            _animator = GetComponent<Animator>();
         }
         
         public void Initialize()
@@ -36,27 +36,31 @@ namespace SpyRunners.Player
             if (_isSubscribed)
                 return;
             
-            _playerInputManager = _playerCharacter.PlayerManager.Dependencies[typeof(PlayerInputManager)] as PlayerInputManager;
-            if (!_playerInputManager)
-                throw new System.NullReferenceException("PlayerInputManager is null");
-            _playerInputManager.JumpButton.Pressed += OnJump;
-            _playerMovement = _playerCharacter.Dependencies[typeof(PlayerMovement)] as PlayerMovement;
-            if (!_playerMovement)
-                throw new System.NullReferenceException("PlayerMovement is null");
+            _playerHealth = _playerCharacter.Dependencies[typeof(PlayerHealth)] as PlayerHealth;
+            if (!_playerHealth)
+                throw new System.NullReferenceException("PlayerHealth is null");
+            _playerHealth.Died += OnDied;
 
             _isSubscribed = true;
         }
-        
-        private void Update()
+
+        private void OnDied(PlayerCharacter playerCharacter)
         {
-            //_animator.SetBool("Slide", _playerInputManager.SlideButton.Held);
-            //_animator.SetFloat("InputX", _playerInputManager.MoveInput.x);
-            //_animator.SetFloat("InputY", _playerInputManager.MoveInput.y);
+            if (playerCharacter != _playerCharacter)
+                return;
+            
+            if (_latestCheckpoint == null)
+                throw new System.NullReferenceException("_latestCheckpoint is null");
+            
+            transform.position = _latestCheckpoint.position;
         }
 
-        private void OnJump()
+        private void OnTriggerEnter(Collider other)
         {
-            //_animator.SetTrigger("Jump");
+            if (!other.CompareTag("Checkpoint"))
+                return;
+            
+            _latestCheckpoint = other.transform;
         }
 
         public void CleanUp()
@@ -74,8 +78,8 @@ namespace SpyRunners.Player
             if (!_isSubscribed)
                 return;
 
-            _playerInputManager = null;
-            _playerMovement = null;
+            _playerHealth.Died -= OnDied;
+            _playerHealth = null;
 
             _isSubscribed = false;
         }
@@ -84,7 +88,9 @@ namespace SpyRunners.Player
         {
             if (_isFinished)
                 return;
-            
+
+
+
             _isFinished = true;
         }
     }
