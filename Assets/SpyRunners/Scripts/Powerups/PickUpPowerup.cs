@@ -17,7 +17,7 @@ public class PickUpPowerup : MonoBehaviour
 
     public void Pickup(GameObject target)
     {
-        powerup.Apply(target);
+        powerup.Pickup(target);
         Destroy(gameObject);
     }
 }

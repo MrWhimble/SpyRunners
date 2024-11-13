@@ -16,7 +16,7 @@ namespace SpyRunners.Player
         public InputButton JumpButton { get; } = new("Jump");
         public InputButton SlideButton { get; } = new("Slide");
         public InputButton GrappleButton { get; }= new("Grapple");
-
+        public InputButton PowerupButton { get; } = new("Powerup");
         private bool _isSubscribed = false;
         
         private void Awake()
@@ -48,6 +48,7 @@ namespace SpyRunners.Player
             JumpButton.SubscribeToInputs(_playerInput);
             SlideButton.SubscribeToInputs(_playerInput);
             GrappleButton.SubscribeToInputs(_playerInput);
+            PowerupButton.SubscribeToInputs(_playerInput);
 
             _isSubscribed = true;
         }
@@ -76,6 +77,7 @@ namespace SpyRunners.Player
             JumpButton.UnsubscribeFromInputs();
             SlideButton.UnsubscribeFromInputs();
             GrappleButton.UnsubscribeFromInputs();
+            PowerupButton.UnsubscribeFromInputs();
 
             _isSubscribed = false;
         }
