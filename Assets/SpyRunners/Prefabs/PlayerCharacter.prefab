@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseSpeed: 30
-  _maxSpeed: 100
+  _maxSpeed: 300
   _speedDecreaseRate: -0.5
   _acceleration: 30
   _accelerationFactorFromDot:

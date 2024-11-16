@@ -55,7 +55,7 @@ namespace SpyRunners.Player
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
             _rigidbody = GetComponent<Rigidbody>(); 
-            _speed = _baseSpeed;
+            _speed = _baseSpeed; 
         }
         
         public void Initialize()
