@@ -54,7 +54,7 @@ namespace SpyRunners.Managers
         }
 
         private void SetCameraValues(CameraData data)
-        {
+        { 
             if (!data.Target)
                 return;
             _camera.transform.position = data.Target.position;

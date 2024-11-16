@@ -10,7 +10,7 @@ namespace SpyRunners.Player {
         public GameObject effect;
         private GameObject playerTarget;
         public override void Apply(GameObject target)
-        {
+        { 
             target.GetComponent<PlayerPowerupManager>().AddPowerup(this);
             target.GetComponent<PlayerMovement>().AdjustSpeed(amount);
             target.GetComponent<PlayerEffectManager>().SpawnEffect(effect);

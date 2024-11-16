@@ -19,16 +19,17 @@ namespace SpyRunners.Player
             _playerCharacter.AddDependent(this);
         }
         public void AddPowerup(PowerupEffect newpowerUp)
-        {
-            currentPowerup = newpowerUp;
+        { 
+            if (newpowerUp == currentPowerup)
+                return;
             
-            if(currentPowerup.instant == true)
-            {
+            currentPowerup = newpowerUp; 
+
+            if (currentPowerup.instant == true)
+            { 
                 StartCoroutine(Duration(currentPowerup.duration)); 
                 return;
-            }
-            
-
+            } 
             //UI UPDATE
         } 
 
@@ -36,7 +37,10 @@ namespace SpyRunners.Player
         {
             if (powerUpActive)
                 return;
-             
+
+            if (currentPowerup == null)
+                return;
+
             currentPowerup.Apply(_playerCharacter.gameObject);
             StartCoroutine(Duration(currentPowerup.duration));
         }
@@ -58,9 +62,7 @@ namespace SpyRunners.Player
 
             if (!_playerInputManager)
                 throw new System.NullReferenceException("PlayerInputManager is null");
-            _playerInputManager.PowerupButton.Pressed += ActivatePowerup;
-            _playerInputManager.PowerupButton.Released += ActivatePowerup;
-            Debug.Log("it almost works");
+            _playerInputManager.PowerupButton.Pressed += ActivatePowerup; 
 
             _isSubscribed = true;
         }
@@ -87,7 +89,7 @@ namespace SpyRunners.Player
                 return;
 
             _playerInputManager.PowerupButton.Pressed -= ActivatePowerup;
-            _playerInputManager.PowerupButton.Released -= ActivatePowerup;
+         //   _playerInputManager.PowerupButton.Released -= ActivatePowerup;
             _playerInputManager = null;
 
             _isSubscribed = false;
@@ -95,7 +97,7 @@ namespace SpyRunners.Player
 
         public void Finish()
         {
-            throw new System.NotImplementedException();
+           // throw new System.NotImplementedException();
         }
     }
 }
