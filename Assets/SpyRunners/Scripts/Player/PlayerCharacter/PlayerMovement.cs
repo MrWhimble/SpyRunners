@@ -5,7 +5,9 @@ namespace SpyRunners.Player
     public class PlayerMovement : MonoBehaviour, IDependent
     {
         [Header("Force Settings")]
-        [SerializeField] private float _maxSpeed = 4;
+        [SerializeField] private float _baseSpeed = 4;
+        [SerializeField] private float _maxSpeed = 16;
+        [SerializeField] private float _speedDecreaseRate = -0.5f;
 
         [Header("Acceleration Settings")]
         [SerializeField] private float _acceleration = 50;
@@ -42,6 +44,8 @@ namespace SpyRunners.Player
         private Vector3 _goalVelocity;
 
         private bool _jumpBuffer;
+
+        private float _speed;
         
         private bool _subscribed = false;
         
@@ -50,7 +54,9 @@ namespace SpyRunners.Player
             _hitCache = new RaycastHit[4];
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
-            _rigidbody = GetComponent<Rigidbody>(); 
+            _rigidbody = GetComponent<Rigidbody>();
+
+            _speed = _baseSpeed;
         }
         
         public void Initialize()
@@ -77,8 +83,7 @@ namespace SpyRunners.Player
 
         public void AdjustSpeed(float amount )
         {
-            _maxSpeed += amount;   
-            
+            _speed = Mathf.Clamp(_speed + amount, _baseSpeed, _maxSpeed);
         }
 
         private void FixedUpdate()
@@ -89,6 +94,7 @@ namespace SpyRunners.Player
             float deltaTime = Time.fixedDeltaTime;
 
             bool grounded = GetGroundHit(out RaycastHit groundHit);
+            
             
             _groundedRigidbody = groundHit.rigidbody;
             Vector3 groundVelocity = grounded && _groundedRigidbody
@@ -101,6 +107,7 @@ namespace SpyRunners.Player
                 upwardsForce = (_jumpForce / deltaTime) * _rigidbody.mass;
                 grounded = false;
                 _jumpBuffer = false;
+                _playerMovementStateManager.CurrentState = PlayerMovementStates.Airborne;
             }
             
             Vector3 inputGoal = new Vector3(_playerInputManager.MoveInput.x, 0, _playerInputManager.MoveInput.y);
@@ -152,6 +159,16 @@ namespace SpyRunners.Player
             Vector3 actualAcceleration = Vector3.Scale(requiredAcceleration * _rigidbody.mass, _forceScale);
             Vector3 finalForce = actualAcceleration + new Vector3(0, upwardsForce, 0);
             _rigidbody.AddForce(finalForce);
+            
+            if (_rigidbody.velocity.magnitude > 0.1f && finalForce.magnitude > 0.1f && !grounded)
+                _playerMovementStateManager.CurrentState = PlayerMovementStates.Running;
+            else
+                _playerMovementStateManager.CurrentState = PlayerMovementStates.Idle;
+            
+            if (_playerMovementStateManager.CurrentState is PlayerMovementStates.Running)
+                _speed = Mathf.Clamp(_speed + _speedDecreaseRate * deltaTime, _baseSpeed, _maxSpeed);
+            else if (_playerMovementStateManager.CurrentState is PlayerMovementStates.Idle)
+                _speed = _baseSpeed;
         }
 
         private void OnJumpPressed()
