@@ -8,6 +8,7 @@ namespace SpyRunners.Player
         private Animator _animator;
         private PlayerInputManager _playerInputManager;
         private PlayerMovement _playerMovement;
+        private PlayerMovementStateManager _playerMovementStateManager;
         
         private bool _isInitialized = false;
         private bool _isSubscribed = false;
@@ -43,6 +44,10 @@ namespace SpyRunners.Player
             _playerMovement = _playerCharacter.Dependencies[typeof(PlayerMovement)] as PlayerMovement;
             if (!_playerMovement)
                 throw new System.NullReferenceException("PlayerMovement is null");
+            _playerMovementStateManager = _playerCharacter.Dependencies[typeof(PlayerMovementStateManager)] as PlayerMovementStateManager;
+            if (!_playerMovementStateManager)
+                throw new System.NullReferenceException("PlayerMovementStateManager is null");
+            _playerMovementStateManager.StateChanged += OnStateChanged;
 
             _isSubscribed = true;
         }
@@ -57,6 +62,11 @@ namespace SpyRunners.Player
         private void OnJump()
         {
             //_animator.SetTrigger("Jump");
+        }
+
+        private void OnStateChanged(PlayerMovementStates previousState, PlayerMovementStates currentState)
+        {
+            
         }
 
         public void CleanUp()
@@ -74,9 +84,12 @@ namespace SpyRunners.Player
             if (!_isSubscribed)
                 return;
 
+            _playerInputManager.JumpButton.Pressed -= OnJump;
             _playerInputManager = null;
             _playerMovement = null;
-
+            _playerMovementStateManager.StateChanged -= OnStateChanged;
+            _playerMovementStateManager = null;
+            
             _isSubscribed = false;
         }
 
