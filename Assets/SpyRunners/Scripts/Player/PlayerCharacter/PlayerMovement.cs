@@ -29,7 +29,7 @@ namespace SpyRunners.Player
         [SerializeField] private float _groundCheckRadius = 0.2f;
         
         [Header("Misc Settings")]
-        [SerializeField] private float _jumpForce = 4;
+        [SerializeField] private float _jumpForce = 4; 
         [SerializeField] private Vector3 _forceScale = new Vector3(1, 0, 1);
         
         private PlayerCharacter _playerCharacter;
@@ -54,8 +54,7 @@ namespace SpyRunners.Player
             _hitCache = new RaycastHit[4];
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
-            _rigidbody = GetComponent<Rigidbody>();
-
+            _rigidbody = GetComponent<Rigidbody>(); 
             _speed = _baseSpeed;
         }
         
@@ -107,7 +106,7 @@ namespace SpyRunners.Player
                 upwardsForce = (_jumpForce / deltaTime) * _rigidbody.mass;
                 grounded = false;
                 _jumpBuffer = false;
-                _playerMovementStateManager.CurrentState = PlayerMovementStates.Airborne;
+                  
             }
             
             Vector3 inputGoal = new Vector3(_playerInputManager.MoveInput.x, 0, _playerInputManager.MoveInput.y);
@@ -123,7 +122,7 @@ namespace SpyRunners.Player
                                  * _accelerationFactorFromDot.Evaluate(velocityDot) 
                                  * accelerationFactor;
 
-            Vector3 targetVelocity = inputGoal * _maxSpeed;
+            Vector3 targetVelocity = inputGoal * _speed;
 
             _goalVelocity = Vector3.MoveTowards(
                 _goalVelocity, 
@@ -141,6 +140,7 @@ namespace SpyRunners.Player
 
             if (!grounded)
             {
+                _playerMovementStateManager.CurrentState = PlayerMovementStates.Airborne;
                 Vector3 horizontalVelocity = _rigidbody.velocity;
                 horizontalVelocity.y = 0;
                 if (horizontalVelocity.magnitude > _maxSpeed)
@@ -159,16 +159,19 @@ namespace SpyRunners.Player
             Vector3 actualAcceleration = Vector3.Scale(requiredAcceleration * _rigidbody.mass, _forceScale);
             Vector3 finalForce = actualAcceleration + new Vector3(0, upwardsForce, 0);
             _rigidbody.AddForce(finalForce);
-            
-            if (_rigidbody.velocity.magnitude > 0.1f && finalForce.magnitude > 0.1f && !grounded)
-                _playerMovementStateManager.CurrentState = PlayerMovementStates.Running;
-            else
-                _playerMovementStateManager.CurrentState = PlayerMovementStates.Idle;
-            
+
+            if (grounded)
+            {
+                if (_rigidbody.velocity.magnitude > 0.1f && finalForce.magnitude > 0.1f)
+                    _playerMovementStateManager.CurrentState = PlayerMovementStates.Running;
+                else
+                    _playerMovementStateManager.CurrentState = PlayerMovementStates.Idle; 
+            }
             if (_playerMovementStateManager.CurrentState is PlayerMovementStates.Running)
                 _speed = Mathf.Clamp(_speed + _speedDecreaseRate * deltaTime, _baseSpeed, _maxSpeed);
             else if (_playerMovementStateManager.CurrentState is PlayerMovementStates.Idle)
                 _speed = _baseSpeed;
+
         }
 
         private void OnJumpPressed()

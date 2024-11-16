@@ -5,7 +5,7 @@ namespace SpyRunners.Player
     public class PlayerAnimationManager : MonoBehaviour, IDependent
     {
         private PlayerCharacter _playerCharacter;
-        private Animator _animator;
+        [SerializeField] private Animator _animator;
         private PlayerInputManager _playerInputManager;
         private PlayerMovement _playerMovement;
         private PlayerMovementStateManager _playerMovementStateManager;
@@ -19,7 +19,7 @@ namespace SpyRunners.Player
         {
             _playerCharacter = GetComponent<PlayerCharacter>();
             _playerCharacter.AddDependent(this);
-            _animator = GetComponent<Animator>();
+            //_animator = GetComponent<Animator>();
         }
         
         public void Initialize()
@@ -66,7 +66,11 @@ namespace SpyRunners.Player
 
         private void OnStateChanged(PlayerMovementStates previousState, PlayerMovementStates currentState)
         {
-            
+            if (previousState == currentState)
+                return; 
+
+            _animator.ResetTrigger(previousState.ToString());
+            _animator.SetTrigger(currentState.ToString());
         }
 
         public void CleanUp()

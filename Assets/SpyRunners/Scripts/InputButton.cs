@@ -55,7 +55,7 @@ namespace SpyRunners
         
         private void OnPressed(InputAction.CallbackContext context)
         {
-            Debug.Log($"Pressed: {_inputName}");
+           // Debug.Log($"Pressed: {_inputName}");
             Pressed?.Invoke();
             Held = true;
         }

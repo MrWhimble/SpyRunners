@@ -4,6 +4,7 @@
     {
         Idle,
         Running,
+        Walking,
         Airborne,
         Sliding,
         Grappling

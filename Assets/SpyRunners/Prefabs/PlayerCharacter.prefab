@@ -232,11 +232,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea97ddf06c6b49bc9f47c306cd683b7f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier:
-  _baseSpeed: 8
-  _maxSpeed: 20
+  m_EditorClassIdentifier: 
+  _baseSpeed: 30
+  _maxSpeed: 100
   _speedDecreaseRate: -0.5
-  _acceleration: 200
+  _acceleration: 30
   _accelerationFactorFromDot:
     serializedVersion: 2
     m_Curve:
@@ -389,7 +389,7 @@ MonoBehaviour:
   _grappleVisualPrefab: {fileID: 2188937578273059951, guid: 1435087fea5f51d488fe20a5ce04c153,
     type: 3}
   _grappleOrigin: {fileID: 148962006077749877}
-  _maxDistanceFromGrapplePoint: 1
+  _maxDistanceFromGrapplePoint: 200
   _maxDistanceFromOrigin: 200
   _minDistanceFromOrigin: 3
   _grappleThrowSpeed: 50
@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e43340e0c64768bf3da854101a498d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 5684026919457208677}
 --- !u!114 &2256828237200816200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +508,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7412654258829627495}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 0

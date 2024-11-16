@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 3
   instant: 1
-  amount: 20
+  amount: 100
   effect: {fileID: 7968514742294015579, guid: d33d06ca0f500f040a56e46e49084b06, type: 3}

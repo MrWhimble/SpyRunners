@@ -179,7 +179,7 @@ namespace SpyRunners.Player
                 StopCoroutine(_moveGrappleCoroutine);
             Destroy(_grappleVisual);
             _grappleTarget = null;
-            _playerMovementStateManager.CurrentState = PlayerMovementStates.Airborne;
+            _playerMovementStateManager.RevertState();
         }
 
         public void CleanUp()
