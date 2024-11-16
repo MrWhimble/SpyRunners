@@ -388,7 +388,7 @@ MonoBehaviour:
     type: 3}
   _grappleOrigin: {fileID: 148962006077749877}
   _maxDistanceFromGrapplePoint: 1
-  _maxDistanceFromOrigin: 20
+  _maxDistanceFromOrigin: 200
   _minDistanceFromOrigin: 3
   _grappleThrowSpeed: 50
   _pullingSpeed: 40
