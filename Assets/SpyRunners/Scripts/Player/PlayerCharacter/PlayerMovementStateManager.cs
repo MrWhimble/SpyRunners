@@ -15,8 +15,12 @@ namespace SpyRunners.Player
             {
                 _previousState = _currentState;
                 _currentState = value;
+                StateChanged?.Invoke(_previousState, _currentState);
             }
         }
+        
+        public delegate void StateChangedDelegate(PlayerMovementStates previousState, PlayerMovementStates currentState);
+        public event StateChangedDelegate StateChanged;
 
         public void RevertState()
         {
