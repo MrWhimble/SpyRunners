@@ -66,6 +66,8 @@ namespace SpyRunners.Player
 
         private void OnStateChanged(PlayerMovementStates previousState, PlayerMovementStates currentState)
         {
+
+            Debug.Log(currentState);
             if (previousState == currentState)
                 return; 
 

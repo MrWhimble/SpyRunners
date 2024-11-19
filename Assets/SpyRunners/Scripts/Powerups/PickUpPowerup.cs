@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PickUpPowerup : MonoBehaviour
 {
-    public PowerupEffect powerup;
-    public float duration;
-
+    public PowerupEffect powerup; 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

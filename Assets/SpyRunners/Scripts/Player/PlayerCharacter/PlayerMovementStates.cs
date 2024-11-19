@@ -7,6 +7,8 @@
         Walking,
         Airborne,
         Sliding,
-        Grappling
+        Grappling,
+        GrappleThrow,
+        GrappleRelease
     }
 }

@@ -33,6 +33,7 @@ namespace SpyRunners.Player
         private bool _isSubscribed = false;
         private bool _isCleanedUp = false;
         private bool _isFinished = false;
+        private bool _grappling = false; 
         
         private void Awake()
         {
@@ -106,6 +107,9 @@ namespace SpyRunners.Player
             bool hasTarget = GetBestTarget(out _grappleTarget, out Vector3 targetPositionInWorld);
             if (!hasTarget)
                 return;
+
+            _playerMovementStateManager.CurrentState = PlayerMovementStates.GrappleThrow;
+
             _localTargetPosition = _grappleTarget.InverseTransformPoint(targetPositionInWorld);
 
             if (!_grappleVisual)
@@ -113,7 +117,8 @@ namespace SpyRunners.Player
             
             if (_moveGrappleCoroutine != null)
                 StopCoroutine(_moveGrappleCoroutine);
-            _moveGrappleCoroutine = StartCoroutine(MoveGrappleToTarget());
+            _grappling = true;
+            _moveGrappleCoroutine = StartCoroutine(MoveGrappleToTarget());  
         }
 
         private IEnumerator MoveGrappleToTarget()
@@ -169,6 +174,7 @@ namespace SpyRunners.Player
             }
             
             
+            
 
             return target != null;
         }
@@ -179,7 +185,15 @@ namespace SpyRunners.Player
                 StopCoroutine(_moveGrappleCoroutine);
             Destroy(_grappleVisual);
             _grappleTarget = null;
+
+            if (_grappling)
+            {
+                _playerMovementStateManager.CurrentState = PlayerMovementStates.GrappleRelease;
+                return;
+            }
+
             _playerMovementStateManager.RevertState();
+            _grappling = false;
         }
 
         public void CleanUp()
