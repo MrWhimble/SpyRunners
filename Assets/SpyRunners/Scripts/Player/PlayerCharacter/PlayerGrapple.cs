@@ -165,7 +165,7 @@ namespace SpyRunners.Player
                 if (Vector3.Distance(ray.GetPoint(rayDistance), closestPoint) > _maxDistanceFromGrapplePoint)
                     continue;
                 
-                if (realDistanceToGrapplePoint > bestDistance)
+                if (Vector3.Distance(closestPoint, ray.GetPoint(rayDistance)) > bestDistance)
                     continue;
 
                 bestDistance = realDistanceToGrapplePoint;

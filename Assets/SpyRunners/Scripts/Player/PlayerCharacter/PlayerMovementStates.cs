@@ -4,11 +4,10 @@
     {
         Idle,
         Running,
-        Walking,
         Airborne,
         Sliding,
-        Grappling,
-        GrappleThrow,
-        GrappleRelease
+        WallRiding,
+        WallJump,
+        Grappling
     }
 }
