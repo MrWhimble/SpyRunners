@@ -8,6 +8,8 @@
         Sliding,
         WallRiding,
         WallJump,
-        Grappling
+        Grappling,
+        GrappleThrow,
+        GrappleRelease
     }
 }

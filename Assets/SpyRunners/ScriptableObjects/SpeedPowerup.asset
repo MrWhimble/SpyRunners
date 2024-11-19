@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f008ee4b476818c43ad9c8eff7e32108, type: 3}
   m_Name: SpeedPowerup
   m_EditorClassIdentifier: 
-  duration: 10
+  duration: 3
   instant: 1
   amount: 1000
   effect: {fileID: 7968514742294015579, guid: d33d06ca0f500f040a56e46e49084b06, type: 3}

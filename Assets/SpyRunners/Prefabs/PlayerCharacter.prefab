@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e43340e0c64768bf3da854101a498d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 5684026919457208677}
 --- !u!114 &2256828237200816200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,7 +791,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -5495902117074765545, guid: f312afbd80371b041a2d53259940a695,
+      objectReference: {fileID: 2959467708922500008, guid: f312afbd80371b041a2d53259940a695,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
