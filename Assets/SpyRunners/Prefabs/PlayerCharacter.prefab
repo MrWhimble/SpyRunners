@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea97ddf06c6b49bc9f47c306cd683b7f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   _baseSpeed: 8
   _maxSpeed: 20
   _speedDecreaseRate: -0.5
@@ -271,9 +271,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _accelerationFactorOnGround: 1
+  _accelerationFactorOnWall: 1
   _accelerationFactorInAir: 0.5
   _maxAccelerationForce: 200
   _maxAccelerationForceFactorOnGround: 1
+  _maxAccelerationForceFactorOnWall: 1
   _maxAccelerationForceFactorInAir: 0.5
   _maxAccelerationForceFactorFromDot:
     serializedVersion: 2
@@ -299,6 +301,39 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _maxAccelerationForceFactorOnWallFromDot:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -347,6 +382,17 @@ MonoBehaviour:
   _groundCheckStartHeight: 0.6
   _groundCheckDistance: 0.26
   _groundCheckRadius: 0.4
+  _wallCheckLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  _wallCheckStartHeight: 0.6
+  _wallCheckDistance: 0.15
+  _wallCheckRadius: 0.4
+  _minSpeedToWallRide: 6
+  _maxVerticalSpeedToWallRide: 4
+  _wallNormalPushingForce: 0
+  _wallAntiGravityForceMultiplier: 0.9
+  _wallJumpingNormalForce: 10
   _jumpForce: 12
   _forceScale: {x: 1, y: 0, z: 1}
 --- !u!114 &-7495075262693985486

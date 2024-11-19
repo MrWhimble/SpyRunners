@@ -6,6 +6,8 @@
         Running,
         Airborne,
         Sliding,
+        WallRiding,
+        WallJump,
         Grappling
     }
 }

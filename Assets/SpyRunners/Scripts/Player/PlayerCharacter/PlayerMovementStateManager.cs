@@ -13,6 +13,8 @@ namespace SpyRunners.Player
             get => _currentState;
             set
             {
+                if (_currentState == value)
+                    return;
                 _previousState = _currentState;
                 _currentState = value;
                 StateChanged?.Invoke(_previousState, _currentState);

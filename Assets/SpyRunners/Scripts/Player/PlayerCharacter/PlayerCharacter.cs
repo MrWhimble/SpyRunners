@@ -78,7 +78,7 @@ namespace SpyRunners.Player
             if (_isFinished)
                 return; 
 
-            if (gameObject)
+            if (this && gameObject)
                 Destroy(gameObject);
 
             _isFinished = true;
