@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ApplyPowerup : MonoBehaviour
 {
-    public PowerupEffect powerup;
-    public float duration;
+    public PowerupEffect powerup; 
     bool used = false;
 
     private void OnTriggerEnter(Collider other)

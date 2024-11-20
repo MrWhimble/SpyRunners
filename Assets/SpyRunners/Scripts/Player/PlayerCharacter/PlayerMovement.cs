@@ -148,7 +148,7 @@ namespace SpyRunners.Player
                                  * _accelerationFactorFromDot.Evaluate(velocityDot) 
                                  * accelerationFactor;
 
-            Vector3 targetVelocity = inputGoal * _maxSpeed;
+            Vector3 targetVelocity = inputGoal * _speed;
 
             _goalVelocity = Vector3.MoveTowards(
                 _goalVelocity, 

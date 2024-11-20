@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2148520668d5fa74d908260dc00df47e, type: 3}
-  m_Name: New Dash Powerup
+  m_Name: DashPowerup
   m_EditorClassIdentifier: 
-  duration: 0.5
+  duration: 0.25
   instant: 0
-  dashForce: 10000
+  dashForce: 2000
   effect: {fileID: 7968514742294015579, guid: d33d06ca0f500f040a56e46e49084b06, type: 3}

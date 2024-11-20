@@ -6,7 +6,7 @@ namespace SpyRunners.Managers
 {
     public class CameraManager : MonoBehaviour
     {
-        private static CameraManager _instance;
+       public static CameraManager _instance;
         
         private Camera _camera;
         public static Camera Camera => _instance ? _instance._camera : null;
